@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RegisterUser from '../query/auth';
+
 export default function Register() {
   const [fullName, setFullName] = useState('');
   const [username, setUsername] = useState('');
@@ -14,7 +15,6 @@ export default function Register() {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-
     if (!fullName || !username || !email || !password) {
       toast.error('Please fill all fields');
       return;
@@ -29,11 +29,14 @@ export default function Register() {
       username,
       password,
     });
-    console.log(res);
-    if (res) {
+
+    //  @ts-expect-error no error property in AxiosResponseProps
+    if (res && res?.status === 201) {
       toast.success('Account created successfully');
+      window.location.href = '/login';
     } else {
-      toast.error('An error occurred. Please try again');
+      //  @ts-expect-error no error property in AxiosResponseProps
+      toast.error(res?.response?.data?.error || 'An error occurred');
     }
   };
   return (
@@ -75,9 +78,9 @@ export default function Register() {
               <div className='form__group '>
                 <label htmlFor='room_name'>Email</label>
                 <input
-                  id='username'
-                  name='username'
-                  type='text'
+                  id='email'
+                  name='email'
+                  type='email'
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
                 />

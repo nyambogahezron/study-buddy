@@ -1,7 +1,7 @@
 
 // rooms data store and actions
 
-import create from 'zustand';
+import { createStore } from 'zustand';
 import { Room } from '../types';
 
 type RoomStore = {
@@ -10,7 +10,7 @@ type RoomStore = {
   removeRoom: (roomId: number) => void;
 };
 
-export const useRoomStore = create<RoomStore>((set) => ({
+export const useRoomStore = createStore<RoomStore>((set) => ({
   rooms: [],
   addRoom: (room) => set((state) => ({ rooms: [...state.rooms, room] })),
   removeRoom: (roomId) =>

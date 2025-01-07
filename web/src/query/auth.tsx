@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import Axios from '../utils/Axios';
 
 type RegisterUserProps = {
@@ -14,7 +15,7 @@ export default async function RegisterUser({
   username,
 }: RegisterUserProps) {
   try {
-    const response = await Axios.post('/register/', {
+    const response: AxiosResponse = await Axios.post('/register/', {
       email,
       password,
       name,
@@ -22,8 +23,7 @@ export default async function RegisterUser({
     });
     return response;
   } catch (error) {
-    console.error(error);
-    return null;
+    return error;
   }
 }
 
@@ -42,8 +42,7 @@ export async function LoginUser({
     });
     return response;
   } catch (error) {
-    console.error(error);
-    return null;
+    return error;
   }
 }
 
@@ -53,7 +52,6 @@ export async function LogoutUser() {
     const response = await Axios.post('/logout/');
     return response;
   } catch (error) {
-    console.error(error);
-    return null;
+    return error;
   }
 }

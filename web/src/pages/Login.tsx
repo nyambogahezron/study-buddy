@@ -2,12 +2,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Login() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    console.log('username:', username);
   };
   return (
     <main className='sign-in auth layout'>
@@ -22,15 +21,16 @@ export default function Login() {
             <h2 className='auth__tagline'>Find your study partner</h2>
 
             <form className='form' action='#' onSubmit={handleSubmit}>
-              <label htmlFor='room_name'>Username</label>
-              <input
-                id='username'
-                name='username'
-                type='text'
-                placeholder='e.g. john_doe'
-                onChange={(e) => setUsername(e.target.value)}
-                value={username}
-              />
+              <div className='form__group'>
+                <label htmlFor='password'>Email</label>
+                <input
+                  id='email'
+                  name='email'
+                  type='text'
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                />
+              </div>
               <div className='form__group'>
                 <label htmlFor='password'>Password</label>
                 <input

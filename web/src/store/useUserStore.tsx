@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { createStore } from 'zustand';
 import { User } from '../types';
 
 type UserStore = {
@@ -7,13 +7,19 @@ type UserStore = {
   setUser: (user: User) => void;
 };
 
-export const useUserStore = create<UserStore>((set) => ({
-  user: {
-    id: 1,
-    username: 'john',
-    name: 'John Doe',
-    email: 'john@gmail.com',
-  },
+export const useUserStore = createStore<UserStore>((set) => ({
+  user: null,
   logout: () => set({ user: null }),
   setUser: (user: User) => set({ user }),
 }));
+
+export const getUser = async () => {
+  const user = localStorage.getItem('user');
+
+  if (user) {
+    const parsedUser = JSON.parse(user);
+    useUserStore.setState({ user: parsedUser });
+  } else {
+    useUserStore.setState({ user: null });
+  }
+};
